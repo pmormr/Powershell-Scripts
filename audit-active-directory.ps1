@@ -38,6 +38,3 @@ $TestimoConfig.Domain.PasswordComplexity.Tests.MinPasswordLength.Parameters.Expe
 
 $TestResults = Invoke-Testimo -Configuration $TestimoConfig -ShowReport:$true -ReturnResults -ShowErrors
 $TestResults | Format-Table -AutoSize *
-
-
-Get-WinADGPOSysvolFolders -Domain $Domain -DomainControllers "lab-dc01.lab.pmormr.com" | Where-Object { $_.SysvolStatus -ne 'Exists' }
