@@ -19,6 +19,18 @@
 
 # set-netipv4protocol -SourceRoutingBehavior "Drop"
 
+# disable netbios over tcp/ip for all adapters -- run on host
+
+# $regkey = "HKLM:SYSTEM\CurrentControlSet\services\NetBT\Parameters\Interfaces"
+# Get-ChildItem $regkey |foreach { Set-ItemProperty -Path "$regkey\$($_.pschildname)" -Name NetbiosOptions -Value 2 -Verbose}
+
+# Reconfigure SMB fun -- run on the host
+
+Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol
+Set-SmbServerConfiguration -EnableSMB1Protocol $false
+Set-SmbServerConfiguration -EnableSMB2Protocol $true
+
+
 # run audit
 
 Import-Module Testimo
@@ -38,3 +50,5 @@ $TestimoConfig.Domain.PasswordComplexity.Tests.MinPasswordLength.Parameters.Expe
 
 $TestResults = Invoke-Testimo -Configuration $TestimoConfig -ShowReport:$true -ReturnResults -ShowErrors
 $TestResults | Format-Table -AutoSize *
+
+
