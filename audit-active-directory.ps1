@@ -36,6 +36,8 @@ $TestimoConfig.Domain.PasswordComplexity.Tests.LockoutThreshold.Parameters.Opera
 $TestimoConfig.Domain.PasswordComplexity.Tests.MaxPasswordAge.Parameters.ExpectedValue = 366
 $TestimoConfig.Domain.PasswordComplexity.Tests.MinPasswordLength.Parameters.ExpectedValue = 5
 
-$TestResults = Invoke-Testimo -Configuration $TestimoConfig -ShowReport:$true -ReturnResults
+$TestResults = Invoke-Testimo -Configuration $TestimoConfig -ShowReport:$true -ReturnResults -ShowErrors
 $TestResults | Format-Table -AutoSize *
 
+
+Get-WinADGPOSysvolFolders -Domain $Domain -DomainControllers "lab-dc01.lab.pmormr.com" | Where-Object { $_.SysvolStatus -ne 'Exists' }
