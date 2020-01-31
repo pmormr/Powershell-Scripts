@@ -18,7 +18,7 @@
 # disable source routing -- run on the box in admin mode
 
 # set-netipv4protocol -SourceRoutingBehavior "Drop"
-# set-netipv4protocol -IcmpRedirects 1
+# set-netipv4protocol -IcmpRedirects 0
 
 # disable netbios over tcp/ip for all adapters -- run on host
 
@@ -30,25 +30,22 @@
 # Disable-WindowsOptionalFeature -Online -FeatureName smb1protocol
 # Set-SmbServerConfiguration -EnableSMB1Protocol $false
 # Set-SmbServerConfiguration -EnableSMB2Protocol $true
-
-# set SMB Server configuration
-Set-smbserverconfiguration -AsynchronousCredits 64 -confirm:$false
-Set-smbserverconfiguration -MaxThreadsPerQueue 20 -confirm:$false
-Set-smbserverconfiguration -Smb2CreditsMax 2048 -confirm:$false
-Set-smbserverconfiguration -Smb2CreditsMin 128 -confirm:$false
-Set-smbserverconfiguration -DurableHandleV2TimeoutInSeconds 30 -confirm:$false
-Set-smbserverconfiguration -AutoDisconnectTimeout 0 -confirm:$false
-Set-smbserverconfiguration -CachedOpenLimit 5 -confirm:$false
+# Set-smbserverconfiguration -AsynchronousCredits 64 -confirm:$false
+# Set-smbserverconfiguration -MaxThreadsPerQueue 20 -confirm:$false
+# Set-smbserverconfiguration -Smb2CreditsMax 2048 -confirm:$false
+# Set-smbserverconfiguration -Smb2CreditsMin 128 -confirm:$false
+# Set-smbserverconfiguration -DurableHandleV2TimeoutInSeconds 30 -confirm:$false
+# Set-smbserverconfiguration -AutoDisconnectTimeout 0 -confirm:$false
+# Set-smbserverconfiguration -CachedOpenLimit 5 -confirm:$false
 
 # disable 8.3 filenames
-REG add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsDisable8dot3NameCreation" /T REG_DWORD /D "1" /f
+# REG add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsDisable8dot3NameCreation" /T REG_DWORD /D "1" /f
 
 # set srv.sys to start on demand
-REG add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer" /v "DependOnService" /T REG_MULTI_SZ /D "SamSS\0Srv" /f
-REG add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\srv" /v "start" /T REG_DWORD /D "3" /f
+# REG add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer" /v "DependOnService" /T REG_MULTI_SZ /D "SamSS\Srv2" /f
 
 # enable client failback for SYSVOL and Netlogon
-REG add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dfs\Parameters" /v "SysvolNetlogonTargetFailback" /T REG_DWORD /D "1" /f
+# REG add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dfs\Parameters" /v "SysvolNetlogonTargetFailback" /T REG_DWORD /D "1" /f
 
 
 
