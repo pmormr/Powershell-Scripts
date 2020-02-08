@@ -69,7 +69,7 @@ $TestimoConfig.Domain.PasswordComplexity.Tests.LockoutThreshold.Parameters.Opera
 $TestimoConfig.Domain.PasswordComplexity.Tests.MaxPasswordAge.Parameters.ExpectedValue = 366
 $TestimoConfig.Domain.PasswordComplexity.Tests.MinPasswordLength.Parameters.ExpectedValue = 5
 
-$TestResults = Invoke-Testimo -Configuration $TestimoConfig -ShowReport:$true -ReturnResults -ShowErrors
+$TestResults = Invoke-Testimo -Configuration $TestimoConfig -ReportPath "output/current_report.html" -ReturnResults -ShowErrors
 $TestResults | where-object {$_.Status -eq $false } | Format-Table -AutoSize *
 
 
