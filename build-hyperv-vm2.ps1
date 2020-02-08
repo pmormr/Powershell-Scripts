@@ -42,10 +42,8 @@ $VMDVDParam = @{
 
 Set-VMDvdDrive @VMDVDParam
 
-$SetVMNICParam = @{
+# $SetVMNICParam = @{
 
    
-
-}
 
   # need to fix storage

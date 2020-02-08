@@ -169,7 +169,7 @@ Initialize
 
 Set-Location (Split-Path $MyInvocation.MyCommand.Path) # Set the path of the script as the working directory
 
-$TimeStamp = Get-Date -Format o | foreach {$_ -replace ":", "."} # Timestamp for logfile
+$TimeStamp = Get-Date -Format o | ForEach-Object {$_ -replace ":", "."} # Timestamp for logfile
 
 $LogFile = "New-CtmADKrbtgtKeys_$TimeStamp.log" # Logfile
 
@@ -298,7 +298,7 @@ Write-Host 'Gathering and analyzing target domain information...'
 Import-Module ActiveDirectory
 Import-Module GroupPolicy
 
-$TargetDomain = Get-AdDomain | Select Name,DNSRoot,NetBIOSName,DomainMode,PDCEmulator
+$TargetDomain = Get-AdDomain | Select-Object Name,DNSRoot,NetBIOSName,DomainMode,PDCEmulator
 
 Write-Host ''
 Write-Host '   Domain NetBIOS name: ' -NoNewline; Write-Host -ForegroundColor Cyan $TargetDomain.NetBIOSName
@@ -356,7 +356,7 @@ Write-Host ''
 
 $RwDcs = @()
 
-Try {$RwDcs = Get-ADDomainController -Filter {IsReadOnly -eq $false} -Server $TargetDomain.PDCEmulator | Select Name,Hostname,Domain,Site}
+Try {$RwDcs = Get-ADDomainController -Filter {IsReadOnly -eq $false} -Server $TargetDomain.PDCEmulator | Select-Object Name,Hostname,Domain,Site}
 Catch {Throw $_}
 
 Write-Host '   Checking RPC connectivity to domain controllers:' 
