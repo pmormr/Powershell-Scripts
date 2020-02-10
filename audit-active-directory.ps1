@@ -6,6 +6,15 @@
 
 # get-adreplicationsitelink -filter "*" | % {Set-ADReplicationSiteLink $_ -Add @{options=1}}
 
+# fix replication connections to use notify
+<#
+
+$connections = Get-ADReplicationConnection -filter * 
+foreach($connection in $connections){
+    Set-ADReplicationConnection $connection -Replace @{options=9}
+}
+
+#>
 # fix default users and computers containers
 
 # redircmp "OU=Computers-Workstations,DC=lab,DC=pmormr,DC=com"
@@ -41,7 +50,7 @@
 # disable 8.3 filenames
 # REG add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\FileSystem" /v "NtfsDisable8dot3NameCreation" /T REG_DWORD /D "1" /f
 
-# set srv.sys to start on demand
+# set srv.sys to start on demand -- need to reverify
 # REG add "HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\LanmanServer" /v "DependOnService" /T REG_MULTI_SZ /D "SamSS\Srv2" /f
 
 # enable client failback for SYSVOL and Netlogon
