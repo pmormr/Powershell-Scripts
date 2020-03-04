@@ -31,4 +31,6 @@ if ( $null -eq $TestTrust) {
 
 
 $TestResults = Invoke-Testimo -Configuration $TestimoConfig -ReportPath "output/current_report.html" -ReturnResults -ShowErrors
-$TestResults | where-object {$_.Status -eq $false } | Format-List
+$TestResults | where-object {$_.Status -eq $false } | Format-Table -AutoSize *
+
+Get-EventsInformation -LogName 'Application', 'System', 'Security', 'Microsoft-Windows-PowerShell/Operational' -machine "lab-dc02"
